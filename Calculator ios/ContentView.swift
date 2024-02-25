@@ -29,6 +29,16 @@ enum CalcButton: String
     case clear = "AC"
     case negative = "-/+"
     
+    var buttonColor : Color{
+        switch self {
+        case .add, .subtract, .multiply, .divide, .equal:
+            return .orange
+        case .clear, .negative , .percentage :
+            return Color(.lightGray)
+        default:
+            return Color(UIColor(red: 55/255.0, green: 55/255.0, blue: 55/255.0,alpha:1 ))
+        }
+    }
 }
 
 struct ContentView: View 
@@ -47,6 +57,7 @@ struct ContentView: View
             Color.black.edgesIgnoringSafeArea(.all)
             VStack
             {
+                Spacer()
                 //test display
                 HStack
                 {
@@ -77,7 +88,7 @@ struct ContentView: View
                                     )
                                     .background(Color.orange)
                                     .foregroundColor(.white)
-                                    .cornerRadius(35)
+                                    .cornerRadius( self.buttonWidth(item:item) / 2)
                                 
                             }
                             )
