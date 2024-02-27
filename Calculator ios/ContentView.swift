@@ -43,6 +43,7 @@ enum CalcButton: String
 
 struct ContentView: View 
 {
+    @State var value = "0"
     let buttons: [[CalcButton]] = [
         [.clear , .negative, .percentage , .divide ],
         [.seven , .eight, .nine ,.subtract ],
@@ -62,9 +63,9 @@ struct ContentView: View
                 HStack
                 {
                     Spacer()
-                    Text("0")
+                    Text(value)
                         .bold()
-                        .font(.system(size: 64))
+                        .font(.system(size: 100))
                         .foregroundColor(.white)
                 }
                 .padding()
@@ -76,6 +77,7 @@ struct ContentView: View
                         ForEach(row , id: \.self.rawValue ) { item in
                             Button(action :
                                     {
+                                self.didTap(button: item)
                                 
                             }, label :
                                     {
@@ -86,7 +88,7 @@ struct ContentView: View
                                                                 
                                         height : self.buttonHeight()
                                     )
-                                    .background(Color.orange)
+                                    .background(item.buttonColor)
                                     .foregroundColor(.white)
                                     .cornerRadius( self.buttonWidth(item:item) / 2)
                                 
@@ -103,7 +105,32 @@ struct ContentView: View
         }
         
     }
+    
+    func didTap(button:CalcButton) {
+        switch button{
+        case .add,.subtract, .divide, .multiply, .equal:
+            break
+        case .clear:
+            break
+        case .decimal, .negative, .percentage:
+            break
+        default:
+            let number = button.rawValue
+            if self.value == "0" {
+                value = number
+            }
+            else {
+                self.value = "\(self.value)\(number)"
+                
+                
+            }
+        }
+        
+    }
     func buttonWidth(item:CalcButton)-> CGFloat{
+        if item == .zero {
+            return ((UIScreen.main.bounds.width - (4*12)) / 4) * 2
+        }
         return (UIScreen.main.bounds.width - (5*12)) / 4
     }
     
