@@ -41,9 +41,17 @@ enum CalcButton: String
     }
 }
 
+enum Operation {
+    case add, subtract, multiply, divide, equal, none
+    
+}
+
 struct ContentView: View 
 {
-    @State var value = "0"
+    @State var value = "0" //to show default value of calculator 
+    
+    @State var currentOperation : Operation = .none
+    
     let buttons: [[CalcButton]] = [
         [.clear , .negative, .percentage , .divide ],
         [.seven , .eight, .nine ,.subtract ],
@@ -109,9 +117,33 @@ struct ContentView: View
     func didTap(button:CalcButton) {
         switch button{
         case .add,.subtract, .divide, .multiply, .equal:
-            break
+            if button == .add
+            {
+                self.currentOperation = .add
+            }
+            
+            else if button == .subtract
+            {
+                self.currentOperation =  .subtract
+            }
+             else if button == .multiply
+            {
+                 self.currentOperation = .multiply
+             }
+            else if button == .divide
+            {
+                self.currentOperation = .divide
+        
+            }
+            else if button == .equal
+            {
+                self.currentOperation = .equal
+            }
+                
+                
+                
         case .clear:
-            break
+            self.value = "0"
         case .decimal, .negative, .percentage:
             break
         default:
